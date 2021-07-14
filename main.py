@@ -202,8 +202,8 @@ Data_X = np.empty((0,9), dtype=np.uint8)
 Data_X = np.append(Data_X, [All_feature], axis=0)
 # 머신러닝 모델 불러오기
 clf_from_joblib = joblib.load('trainedmodel_gbc.pkl') 
-predicted_result = clf_from_joblib.predict(Data_X)
-print(predicted_result)
 # 머신러닝 모델 적용
-
+predicted_result = clf_from_joblib.predict(Data_X)
+list_concentration = ['Neg', '1 aM', '10 aM', '100 aM','1 fM','10 fM','100 fM', '1 pM', '10 pM','100 pM', '1 nM', '10 nM']
 # 결과 출력
+print(list_concentration[predicted_result[0]])

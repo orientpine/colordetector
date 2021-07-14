@@ -1,0 +1,6 @@
+scikit-learn
+numpy
+cv2
+pickle
+joblib
+imutils
