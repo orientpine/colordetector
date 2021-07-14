@@ -1,10 +1,16 @@
+import streamlit as st
+st.set_option('deprecation.showfileUploaderEncoding', False) # deprecation 표시 안함 
+st.title("Concentration Detection using Machine Learning")
+st.markdown("""
+We can know concentration!""")
+
 from sklearn.ensemble import GradientBoostingClassifier
 import numpy as np
 import cv2
 import joblib
 import imutils
-import streamlit as st
 from PIL import Image
+
 
 # 가장 중요한 설정 값들
 x_start, y_start, x_end, y_end = 0, 0, 0, 0
@@ -213,18 +219,13 @@ def Dodetect(img):
     # 결과 출력
     return list_concentration[predicted_result[0]]
 ## 사이트 설정
-st.set_option('deprecation.showfileUploaderEncoding', False) # deprecation 표시 안함 
-st.title("Concentration Detection using Machine Learning")
-st.markdown("""
-We can know concentration!""")
-from PIL import Image
 
 uploaded_file = st.file_uploader("Upload your 96 well photo.", type=['jpeg', 'png', 'jpg', 'webp'])
 if uploaded_file is not None:
         image = Image.open(uploaded_file)
         st.image(image, caption='Uploaded MRI.', use_column_width=True)
         st.write("")
-        st.write("처리중입니다...")
+        st.write("processing...")
         label = Dodetect(image)
         st.write(f"***DNA Concentration is about {label}***")
         
