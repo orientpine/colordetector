@@ -4,7 +4,6 @@ st.title("Concentration Detection using Machine Learning")
 st.markdown("""
 We can know concentration!""")
 
-from sklearn.ensemble import GradientBoostingClassifier
 import numpy as np
 import cv2
 import joblib
