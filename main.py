@@ -179,7 +179,7 @@ def Dodetect(img):
     open_cv_image = np.array(img_pillow)
     img_raw = open_cv_image[:, :, ::-1].copy()  
     # 회전
-    load_img = imutils.rotate(img_raw, -90)
+    load_img = imutils.rotate(img_raw, 0)
     # 원본 이미지가 image shape : (3024, 4032, 3)
     image = imutils.resize(load_img, height=1400)
     oriImage = image.copy()
@@ -198,7 +198,7 @@ def Dodetect(img):
     list_circles = detectcircles(roi)
 
     cropImg = circleExtract_Auto(roi,list_circles, cut_r)
-    cv2.imshow('test',cropImg)
+
     # 이미지에서 데이터 추출
     rgb_feature = RGB_extracter(cropImg)
             ### HSV ###
@@ -222,7 +222,7 @@ def Dodetect(img):
 uploaded_file = st.file_uploader("Upload your 96 well photo.", type=['jpeg', 'png', 'jpg', 'webp'])
 if uploaded_file is not None:
         image = Image.open(uploaded_file)
-        st.image(image, caption='Uploaded MRI.', use_column_width=True)
+        st.image(image, caption='Uploaded 96 well photo.', use_column_width=True)
         st.write("")
         st.write("processing...")
         label = Dodetect(image)
