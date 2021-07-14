@@ -1,7 +1,6 @@
 from sklearn.ensemble import GradientBoostingClassifier
 import numpy as np
 import cv2
-import pickle
 import joblib
 import imutils
 

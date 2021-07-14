@@ -1,6 +1,5 @@
 scikit-learn
 numpy
 opencv-python
-pickle
 joblib
 imutils
