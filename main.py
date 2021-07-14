@@ -200,31 +200,8 @@ def Docrop(img):
     cropImg = circleExtract_Auto(roi,list_circles, cut_r)
     return cropImg
 
-def Dodetect(img):
+def Dodetect(cropImg):
     # 이미지 자르기
-    img_pillow= img.convert('RGB') 
-    open_cv_image = np.array(img_pillow)
-    img_raw = open_cv_image[:, :, ::-1].copy()  
-    # 회전
-    load_img = imutils.rotate(img_raw, 0)
-    # 원본 이미지가 image shape : (3024, 4032, 3)
-    image = imutils.resize(load_img, height=1400)
-    oriImage = image.copy()
-
-    # 자르기를 원하는 위치
-    (h, w) = image.shape[:2]
-    (cX, cY) = (w // 2, h // 2)
-    # 타겟 반지름
-    rad = 80
-    #
-    refPoint = [(cX-rad, cY-rad), (cX+rad, cY+rad)]
-    #refPoint = [refPoint_tuple]
-
-    roi = oriImage[refPoint[0][1]:refPoint[1][1], refPoint[0][0]:refPoint[1][0]]
-        #cv2.imshow("Cropped", roi)
-    list_circles = detectcircles(roi)
-
-    cropImg = circleExtract_Auto(roi,list_circles, cut_r)
     # 이미지에서 데이터 추출
     rgb_feature = RGB_extracter(cropImg)
             ### HSV ###
