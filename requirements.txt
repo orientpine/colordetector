@@ -4,3 +4,4 @@ joblib
 imutils
 streamlit
 pillow
+scikit-learn

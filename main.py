@@ -175,7 +175,9 @@ def circleExtract_Auto(img,list_circles, cut_r):
 # 이미지 불러오기
 def Docrop(img):
     # 이미지 자르기
-    img_raw = cv2.imread(img)
+    img_pillow= img.convert('RGB') 
+    open_cv_image = np.array(img_pillow)
+    img_raw = open_cv_image[:, :, ::-1].copy()  
     # 회전
     load_img = imutils.rotate(img_raw, 0)
     # 원본 이미지가 image shape : (3024, 4032, 3)
@@ -196,7 +198,7 @@ def Docrop(img):
     list_circles = detectcircles(roi)
 
     cropImg = circleExtract_Auto(roi,list_circles, cut_r)
-
+    
     return cropImg
 
 def Dodetect(cropImg):
@@ -228,7 +230,7 @@ if uploaded_file is not None:
         st.write("")
         st.write("cropping...")
         cropped = Docrop(image)
-        st.image(cropped, caption='Target well', use_column_width=True)
+        st.image(Image.fromarray(cropped), caption='Target well', use_column_width=True)
         st.write("processing...")
         label = Dodetect(cropped)
         st.write(f"***DNA Concentration is about {label}***")
