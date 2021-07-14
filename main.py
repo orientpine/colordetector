@@ -3,7 +3,15 @@ import numpy as np
 import cv2
 import joblib
 import imutils
+import streamlit as st
+from PIL import Image
 
+# 가장 중요한 설정 값들
+x_start, y_start, x_end, y_end = 0, 0, 0, 0
+cut_r = 20
+# ML,DL에 사용할 image 양식
+# cropImg 값과 croppedimage 값을 항상 일치 시켜 놓기
+cropImg = np.zeros((112, 112, 3), np.uint8)
 # 함수 정의
 ####### 필요한 함수 ########   
 def RGB_extracter(img_bgr):
@@ -158,51 +166,65 @@ def circleExtract_Auto(img,list_circles, cut_r):
 
     return croppedimage
 ###############################
-x_start, y_start, x_end, y_end = 0, 0, 0, 0
-cut_r = 20
-# ML,DL에 사용할 image 양식
-# cropImg 값과 croppedimage 값을 항상 일치 시켜 놓기
-cropImg = np.zeros((112, 112, 3), np.uint8)
+
 # 이미지 불러오기
+def Dodetect(img):
+    # 이미지 자르기
+    img_pillow= img.convert('RGB') 
+    open_cv_image = np.array(img_pillow)
+    img_raw = open_cv_image[:, :, ::-1].copy()  
+    # 회전
+    load_img = imutils.rotate(img_raw, -90)
+    # 원본 이미지가 image shape : (3024, 4032, 3)
+    image = imutils.resize(load_img, height=1400)
+    oriImage = image.copy()
 
-# 이미지 자르기
-img_raw = cv2.imread('test.jpg')
-# 회전
-load_img = imutils.rotate(img_raw, -90)
-# 원본 이미지가 image shape : (3024, 4032, 3)
-image = imutils.resize(load_img, height=1400)
-oriImage = image.copy()
+    # 자르기를 원하는 위치
+    (h, w) = image.shape[:2]
+    (cX, cY) = (w // 2, h // 2)
+    # 타겟 반지름
+    rad = 80
+    #
+    refPoint = [(cX-rad, cY-rad), (cX+rad, cY+rad)]
+    #refPoint = [refPoint_tuple]
 
-# 자르기를 원하는 위치
-(h, w) = image.shape[:2]
-(cX, cY) = (w // 2, h // 2)
-# 타겟 반지름
-rad = 80
-#
-refPoint = [(cX-rad, cY-rad), (cX+rad, cY+rad)]
-#refPoint = [refPoint_tuple]
+    roi = oriImage[refPoint[0][1]:refPoint[1][1], refPoint[0][0]:refPoint[1][0]]
+        #cv2.imshow("Cropped", roi)
+    list_circles = detectcircles(roi)
 
-roi = oriImage[refPoint[0][1]:refPoint[1][1], refPoint[0][0]:refPoint[1][0]]
-    #cv2.imshow("Cropped", roi)
-list_circles = detectcircles(roi)
+    cropImg = circleExtract_Auto(roi,list_circles, cut_r)
+    cv2.imshow('test',cropImg)
+    # 이미지에서 데이터 추출
+    rgb_feature = RGB_extracter(cropImg)
+            ### HSV ###
+    hsv_feature = HSV_extracter(cropImg)
+    ### RAB ###
+    lab_feature = LAB_extracter(cropImg)
 
-cropImg = circleExtract_Auto(roi,list_circles, cut_r)
-cv2.imshow('test',cropImg)
-# 이미지에서 데이터 추출
-rgb_feature = RGB_extracter(cropImg)
-        ### HSV ###
-hsv_feature = HSV_extracter(cropImg)
-### RAB ###
-lab_feature = LAB_extracter(cropImg)
+    # 추출한 feature들 합치기
+    All_feature = np.concatenate((rgb_feature, hsv_feature, lab_feature), axis=None)
+    Data_X = np.empty((0,9), dtype=np.uint8)
+    Data_X = np.append(Data_X, [All_feature], axis=0)
+    # 머신러닝 모델 불러오기
+    clf_from_joblib = joblib.load('trainedmodel_gbc.pkl') 
+    # 머신러닝 모델 적용
+    predicted_result = clf_from_joblib.predict(Data_X)
+    list_concentration = ['Neg', '1 aM', '10 aM', '100 aM','1 fM','10 fM','100 fM', '1 pM', '10 pM','100 pM', '1 nM', '10 nM']
+    # 결과 출력
+    return list_concentration[predicted_result[0]]
+## 사이트 설정
+st.set_option('deprecation.showfileUploaderEncoding', False) # deprecation 표시 안함 
+st.title("Concentration Detection using Machine Learning")
+st.markdown("""
+We can know concentration!""")
+from PIL import Image
 
-# 추출한 feature들 합치기
-All_feature = np.concatenate((rgb_feature, hsv_feature, lab_feature), axis=None)
-Data_X = np.empty((0,9), dtype=np.uint8)
-Data_X = np.append(Data_X, [All_feature], axis=0)
-# 머신러닝 모델 불러오기
-clf_from_joblib = joblib.load('trainedmodel_gbc.pkl') 
-# 머신러닝 모델 적용
-predicted_result = clf_from_joblib.predict(Data_X)
-list_concentration = ['Neg', '1 aM', '10 aM', '100 aM','1 fM','10 fM','100 fM', '1 pM', '10 pM','100 pM', '1 nM', '10 nM']
-# 결과 출력
-print(list_concentration[predicted_result[0]])
+uploaded_file = st.file_uploader("Upload your 96 well photo.", type=['jpeg', 'png', 'jpg', 'webp'])
+if uploaded_file is not None:
+        image = Image.open(uploaded_file)
+        st.image(image, caption='Uploaded MRI.', use_column_width=True)
+        st.write("")
+        st.write("처리중입니다...")
+        label = Dodetect(image)
+        st.write(f"***DNA Concentration is about {label}***")
+        

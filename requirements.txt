@@ -2,3 +2,5 @@ numpy
 opencv-python
 joblib
 imutils
+streamlit
+pillow
