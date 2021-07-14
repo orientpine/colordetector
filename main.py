@@ -227,9 +227,10 @@ if uploaded_file is not None:
         image = Image.open(uploaded_file)
         st.image(image, caption='Uploaded 96 well photo.', use_column_width=True)
         st.write("")
-        st.write("processing...")
+        st.write("cropping...")
         cropped = Docrop(image)
-        st.image(image, caption='Target well', use_column_width=True)
+        st.image(cropped, caption='Target well', use_column_width=True)
+        st.write("processing...")
         label = Dodetect(cropped)
         st.write(f"***DNA Concentration is about {label}***")
         
