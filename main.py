@@ -229,9 +229,13 @@ if uploaded_file is not None:
         st.image(image, caption='Uploaded 96 well photo.', use_column_width=True)
         st.write("")
         st.write("cropping...")
-        cropped = Docrop(image)
-        st.image(Image.fromarray(cropped[:, :, ::-1].copy()), caption='Target well', use_column_width=True)
-        st.write("processing...")
-        label = Dodetect(cropped)
-        st.write(f"***DNA Concentration is about {label}***")
+        try:
+            cropped = Docrop(image)
+            st.image(Image.fromarray(cropped[:, :, ::-1].copy()), caption='Target well', use_column_width=True)
+            st.write("processing...")
+            label = Dodetect(cropped)
+            st.write(f"***DNA Concentration is about {label}***")
+        except:
+            st.write("There is problem with cropping...\nplease upload another photo!")
+
         
