@@ -204,7 +204,7 @@ def Docrop(img):
 def Drawarea(img):
     img_pillow= img.convert('RGB') 
     open_cv_image = np.array(img_pillow)
-    img_raw = open_cv_image[:, :, ::1].copy()  
+    img_raw = open_cv_image[:, :, ::-1].copy()  
     # 회전
     load_img = imutils.rotate(img_raw, 0)
     # 원본 이미지가 image shape : (3024, 4032, 3)
@@ -246,7 +246,7 @@ uploaded_file = st.file_uploader("Upload your 96 well photo.", type=['jpeg', 'pn
 if uploaded_file is not None:
         image = Image.open(uploaded_file)
         image_drawed = Drawarea(image)
-        st.image(image_drawed, caption='Uploaded 96 well photo.', use_column_width=True)
+        st.image(image_drawed[:, :, ::-1].copy(), caption='Uploaded 96 well photo.', use_column_width=True)
         st.write("")
         st.write("cropping...")
         try:
