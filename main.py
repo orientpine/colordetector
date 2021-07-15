@@ -246,7 +246,7 @@ uploaded_file = st.file_uploader("Upload your 96 well photo.", type=['jpeg', 'pn
 if uploaded_file is not None:
         image = Image.open(uploaded_file)
         image_drawed = Drawarea(image)
-        st.image(image_drawed[:, :, ::-1].copy(), caption='Uploaded 96 well photo.', use_column_width=True)
+        st.image(Image.fromarray(image_drawed[:, :, ::-1].copy()), caption='Uploaded 96 well photo.', use_column_width=True)
         st.write("")
         st.write("cropping...")
         try:
