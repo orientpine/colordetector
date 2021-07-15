@@ -215,8 +215,8 @@ def Drawarea(img):
     (h, w) = image.shape[:2]
     (cX, cY) = (w // 2, h // 2)
     # 타겟 반지름
-    rad = 80
-    cv2.circle(oriImage, (cX, cY), 10, (0, 0, 255), -1)
+    rad = 90
+    
     drawrect(oriImage,(cX-rad, cY-rad), (cX+rad, cY+rad), (0,0,255), 8, 'dotted')
     return oriImage
 def Dodetect(cropImg):
