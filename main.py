@@ -218,7 +218,7 @@ def Drawarea(img):
     rad = 90
     
     drawrect(oriImage,(cX-rad, cY-rad), (cX+rad, cY+rad), (255,0,50), 6, 'dotted')
-    cv2.putText(oriImage, 'Target Well', (cX-rad-50, cY-rad-45), cv2.FONT_HERSHEY_COMPLEX, 2 ,(255,0,50),2,cv2.LINE_AA)
+    cv2.putText(oriImage, 'Target Well', (cX-rad-60, cY-rad-45), cv2.FONT_HERSHEY_COMPLEX, 2 ,(255,0,50),2,cv2.LINE_AA)
     return oriImage
 def Dodetect(cropImg):
     # 이미지 자르기
