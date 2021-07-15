@@ -201,6 +201,24 @@ def Docrop(img):
     
     return cropImg
 
+def Drawarea(img):
+    img_pillow= img.convert('RGB') 
+    open_cv_image = np.array(img_pillow)
+    img_raw = open_cv_image[:, :, ::-1].copy()  
+    # 회전
+    load_img = imutils.rotate(img_raw, 0)
+    # 원본 이미지가 image shape : (3024, 4032, 3)
+    image = imutils.resize(load_img, height=1400)
+    oriImage = image.copy()
+
+    # 자르기를 원하는 위치
+    (h, w) = image.shape[:2]
+    (cX, cY) = (w // 2, h // 2)
+    # 타겟 반지름
+    rad = 80
+    oriImage = cv2.circle(oriImage, (cX, cY), 5, (0, 0, 255), -1)
+    drawed = drawrect(oriImage,(cX-rad, cY-rad), (cX+rad, cY+rad), (0,0,255), 3, 'dotted')
+    return drawed
 def Dodetect(cropImg):
     # 이미지 자르기
     # 이미지에서 데이터 추출
@@ -226,7 +244,8 @@ def Dodetect(cropImg):
 uploaded_file = st.file_uploader("Upload your 96 well photo.", type=['jpeg', 'png', 'jpg', 'webp'])
 if uploaded_file is not None:
         image = Image.open(uploaded_file)
-        st.image(image, caption='Uploaded 96 well photo.', use_column_width=True)
+        image_drawed = Drawarea(image)
+        st.image(image_drawed, caption='Uploaded 96 well photo.', use_column_width=True)
         st.write("")
         st.write("cropping...")
         try:
