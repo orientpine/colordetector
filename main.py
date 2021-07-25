@@ -248,7 +248,7 @@ if uploaded_file_before is not None:
         image_before_drawed = Drawarea(image_before)
         st.write("")
         cropped_before = Docrop(image_before_drawed)
-        st.image([Image.fromarray(image_before_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_before[:, :, ::-1].copy())], caption=caption=['Uploaded sample image','Target well'], use_column_width=True)
+        st.image([Image.fromarray(image_before_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_before[:, :, ::-1].copy())], caption=['Uploaded sample image','Target well'], use_column_width=True)
         
         label_before = Dodetect(cropped_before)
         st.write(f"***DNA Concentration is about {label_before[1]}***")
