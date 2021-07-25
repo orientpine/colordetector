@@ -248,12 +248,12 @@ if uploaded_file_before is not None:
     try:
         image_before = Image.open(uploaded_file_before)
         image_before_drawed = Drawarea(image_before)
+        st.image(Image.fromarray(image_before_drawed[:, :, ::-1].copy()), caption='Uploaded sample image', use_column_width=True)
         st.write("")
         cropped_before = Docrop(image_before_drawed)
-        st.image(Image.fromarray(image_before_drawed[:, :, ::-1].copy()), caption='Uploaded sample image', use_column_width=True)
         st.image(Image.fromarray(cropped_before[:, :, ::-1].copy()), caption='Target well', use_column_width=True)
-        label_before = Dodetect(cropped_before)[0]
-        st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
+        label_before = Dodetect(cropped_before)
+        st.write(f"***DNA Concentration is about {list_concentration[label_before[0]]}***")
     except:
         st.write("There is problem with processing...\nplease upload another image!")
 
