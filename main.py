@@ -274,12 +274,12 @@ if uploaded_file_after is not None:
 st.title('Detection Result')
 if st.button('Analyze'):
     try:
-        st.write('Detected!')
+        st.write('***Result:***')
         if label_before - label_after >= 3:
             st.write("***This is SARS-CoV-2 positive sample***")
         else:
             st.write("***This is SARS-CoV-2 negative sample***")
     except:
-        st.write('Please re-upload images')
+        st.write('***Please re-upload images***')
 else:
-    st.write('Please do analyze!')
+    st.write('***Please do analyze!***')
