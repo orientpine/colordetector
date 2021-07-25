@@ -248,7 +248,7 @@ if uploaded_file_before is not None:
         image_before_drawed = Drawarea(image_before)
         st.write("")
         cropped_before = Docrop(image_before_drawed)
-        st.image([Image.fromarray(image_before_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_before[:, :, ::-1].copy())], caption='Target well', use_column_width=True)
+        st.image([Image.fromarray(image_before_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_before[:, :, ::-1].copy())], caption=caption=['Uploaded sample image','Target well'], use_column_width=True)
         
         label_before = Dodetect(cropped_before)
         st.write(f"***DNA Concentration is about {label_before[1]}***")
@@ -263,7 +263,7 @@ if uploaded_file_after is not None:
         image_after_drawed = Drawarea(image_after)
         st.write("")
         cropped_after = Docrop(image_after_drawed)
-        st.image([Image.fromarray(image_after_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_after[:, :, ::-1].copy())], caption='Target well', use_column_width=True)
+        st.image([Image.fromarray(image_after_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_after[:, :, ::-1].copy())], caption=['Uploaded sample image','Target well'], use_column_width=True)
         
         label_after = Dodetect(cropped_after)
         st.write(f"***DNA Concentration is about {label_after[1]}***")
