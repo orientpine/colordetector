@@ -241,7 +241,7 @@ def Dodetect(cropImg):
     # 결과 출력
     return predicted_result
 ## 사이트 설정
-
+st.header('sample image before guide RNA')
 uploaded_file_before = st.file_uploader("Please upload your sample image before guide RNA.", type=['jpeg', 'png', 'jpg', 'webp'])
 if uploaded_file_before is not None:
     st.write("processing...")
@@ -250,13 +250,13 @@ if uploaded_file_before is not None:
     try:        
         cropped_before = Docrop(image_before)
         st.image([Image.fromarray(image_before_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_before[:, :, ::-1].copy())], 
-                caption=['Uploaded sample image','Target well'], width=200)
+                caption=['Uploaded sample image','Target well'], use_column_width ='auto')
         label_before = Dodetect(cropped_before)[0]
         st.write("")
         st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
     except:
         st.write("There is problem with processing...\nplease upload another image!")
-
+st.header('sample image after guide RNA')
 uploaded_file_after = st.file_uploader("Please upload your sample image after guide RNA.", type=['jpeg', 'png', 'jpg', 'webp'])
 if uploaded_file_after is not None:
     st.write("processing...")
@@ -265,7 +265,7 @@ if uploaded_file_after is not None:
     try:
         cropped_after = Docrop(image_after)
         st.image([Image.fromarray(image_after_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_after[:, :, ::-1].copy())], 
-                caption=['Uploaded sample image','Target well'], width=200)
+                caption=['Uploaded sample image','Target well'], use_column_width ='auto')
         label_after = Dodetect(cropped_after)[0]
         st.write(f"***DNA Concentration is about {list_concentration[label_after]}***")
     except:
@@ -274,13 +274,12 @@ if uploaded_file_after is not None:
 st.title('Detection Result')
 if st.button('Analyze'):
     try:
+        st.write('Detected!')
         if label_before - label_after >= 3:
-            st.header('Detected!')
             st.write("***This is SARS-CoV-2 positive sample***")
         else:
-            st.header('Detected!')
             st.write("***This is SARS-CoV-2 negative sample***")
     except:
-        st.header('Please re-upload images')
+        st.write('Please re-upload images')
 else:
-    st.header('Please do analyze!')
+    st.write('Please do analyze!')
