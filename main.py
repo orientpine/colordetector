@@ -239,23 +239,42 @@ def Dodetect(cropImg):
     predicted_result = clf_from_joblib.predict(Data_X)
     list_concentration = ['Neg', '1 aM', '10 aM', '100 aM','1 fM','10 fM','100 fM', '1 pM', '10 pM','100 pM', '1 nM', '10 nM']
     # 결과 출력
-    return list_concentration[predicted_result[0]]
+    return predicted_result, list_concentration[predicted_result[0]]
 ## 사이트 설정
 
-uploaded_file = st.file_uploader("Upload your 96 well photo.", type=['jpeg', 'png', 'jpg', 'webp'])
-if uploaded_file is not None:
-        image = Image.open(uploaded_file)
-        image_drawed = Drawarea(image)
-        st.image(Image.fromarray(image_drawed[:, :, ::-1].copy()), caption='Uploaded 96 well photo.', use_column_width=True)
+uploaded_file_before = st.file_uploader("Please upload your sample image before guide RNA.", type=['jpeg', 'png', 'jpg', 'webp'])
+if uploaded_file_before is not None:
+        image_before = Image.open(uploaded_file_before)
+        image_before_drawed = Drawarea(image_before)
+        st.image(Image.fromarray(image_before_drawed[:, :, ::-1].copy()), caption='Uploaded sample image before guide RNA.', use_column_width=True)
         st.write("")
         st.write("cropping...")
         try:
-            cropped = Docrop(image)
-            st.image(Image.fromarray(cropped[:, :, ::-1].copy()), caption='Target well', use_column_width=True)
+            cropped_before = Docrop(image_before_drawed)
+            st.image(Image.fromarray(cropped_before[:, :, ::-1].copy()), caption='Target well', use_column_width=True)
             st.write("processing...")
-            label = Dodetect(cropped)
-            st.write(f"***DNA Concentration is about {label}***")
+            label_before = Dodetect(cropped_before)
+            st.write(f"***DNA Concentration is about {label_before[1]}***")
         except:
             st.write("There is problem with cropping...\nplease upload another photo!")
 
-        
+uploaded_file_after = st.file_uploader("Please upload your sample image after guide RNA.", type=['jpeg', 'png', 'jpg', 'webp'])
+if uploaded_file_after is not None:
+        image_after = Image.open(uploaded_file_after)
+        image_after_drawed = Drawarea(image_after)
+        st.image(Image.fromarray(image_after_drawed[:, :, ::-1].copy()), caption='Uploaded sample image after guide RNA.', use_column_width=True)
+        st.write("")
+        st.write("cropping...")
+        try:
+            cropped_after = Docrop(image_after_drawed)
+            st.image(Image.fromarray(cropped_after[:, :, ::-1].copy()), caption='Target well', use_column_width=True)
+            st.write("processing...")
+            label_after = Dodetect(cropped_after)
+            st.write(f"***DNA Concentration is about {label_after[1]}***")
+        except:
+            st.write("There is problem with cropping...\nplease upload another photo!")
+     
+if label_before[0] - label_after[0] >= 3:
+     st.write("***This is SARS-CoV-2 positive sample***")
+else:
+    st.write("***This is SARS-CoV-2 negative sample***")
