@@ -15,6 +15,8 @@ cut_r = 20
 # ML,DL에 사용할 image 양식
 # cropImg 값과 croppedimage 값을 항상 일치 시켜 놓기
 cropImg = np.zeros((112, 112, 3), np.uint8)
+
+list_concentration = ['Neg', '1 aM', '10 aM', '100 aM','1 fM','10 fM','100 fM', '1 pM', '10 pM','100 pM', '1 nM', '10 nM']
 # 함수 정의
 ####### 필요한 함수 ########   
 def RGB_extracter(img_bgr):
@@ -235,9 +237,9 @@ def Dodetect(cropImg):
     clf_from_joblib = joblib.load('trainedmodel_gbc.pkl') 
     # 머신러닝 모델 적용
     predicted_result = clf_from_joblib.predict(Data_X)
-    list_concentration = ['Neg', '1 aM', '10 aM', '100 aM','1 fM','10 fM','100 fM', '1 pM', '10 pM','100 pM', '1 nM', '10 nM']
+
     # 결과 출력
-    return predicted_result, list_concentration[predicted_result[0]]
+    return predicted_result
 ## 사이트 설정
 
 uploaded_file_before = st.file_uploader("Please upload your sample image before guide RNA.", type=['jpeg', 'png', 'jpg', 'webp'])
@@ -250,8 +252,8 @@ if uploaded_file_before is not None:
         cropped_before = Docrop(image_before_drawed)
         st.image([Image.fromarray(image_before_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_before[:, :, ::-1].copy())], caption=['Uploaded sample image','Target well'], use_column_width=True)
         
-        label_before = Dodetect(cropped_before)
-        st.write(f"***DNA Concentration is about {label_before[1]}***")
+        label_before = Dodetect(cropped_before)[0]
+        st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
     except:
         st.write("There is problem with cropping...\nplease upload another image!")
 
@@ -265,18 +267,19 @@ if uploaded_file_after is not None:
         cropped_after = Docrop(image_after_drawed)
         st.image([Image.fromarray(image_after_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_after[:, :, ::-1].copy())], caption=['Uploaded sample image','Target well'], use_column_width=True)
         
-        label_after = Dodetect(cropped_after)
-        st.write(f"***DNA Concentration is about {label_after[1]}***")
+        label_after = Dodetect(cropped_after)[0]
+        st.write(f"***DNA Concentration is about {list_concentration[label_after]}***")
     except:
         st.write("There is problem with cropping...\nplease upload another image!")
 
 st.title('Detection Result')
 if st.button('Analyze'):
     try:
-        st.header('Detected!')
         if label_before[0] - label_after[0] >= 3:
+            st.header('Detected!')
             st.write("***This is SARS-CoV-2 positive sample***")
         else:
+            st.header('Detected!')
             st.write("***This is SARS-CoV-2 negative sample***")
     except:
         st.header('Please re-upload images')
