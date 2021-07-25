@@ -264,7 +264,6 @@ if uploaded_file_after is not None:
     image_after_drawed = Drawarea(image_after)
     try:
         cropped_after = Docrop(image_after)
-        st.image(, caption='Uploaded sample image', use_column_width=True)
         st.image([Image.fromarray(image_after_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_after[:, :, ::-1].copy())], 
                 caption=['Uploaded sample image','Target well'], use_column_width=True)
         label_after = Dodetect(cropped_after)[0]
