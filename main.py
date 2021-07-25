@@ -1,7 +1,6 @@
 import streamlit as st
 st.set_option('deprecation.showfileUploaderEncoding', False) # deprecation 표시 안함 
 st.title("SARS-CoV-2 Detection using Machine Learning")
-
 import numpy as np
 import cv2
 import joblib
@@ -241,7 +240,8 @@ def Dodetect(cropImg):
     # 결과 출력
     return predicted_result
 ## 사이트 설정
-st.header('sample image before guide RNA')
+st.markdown("""---""")
+st.header('Before guide RNA')
 uploaded_file_before = st.file_uploader("Please upload your sample image before guide RNA.", type=['jpeg', 'png', 'jpg', 'webp'])
 if uploaded_file_before is not None:
     st.write("processing...")
@@ -256,7 +256,8 @@ if uploaded_file_before is not None:
         st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
     except:
         st.write("There is problem with processing...\nplease upload another image!")
-st.header('sample image after guide RNA')
+st.markdown("""---""")
+st.header('After guide RNA')
 uploaded_file_after = st.file_uploader("Please upload your sample image after guide RNA.", type=['jpeg', 'png', 'jpg', 'webp'])
 if uploaded_file_after is not None:
     st.write("processing...")
@@ -270,7 +271,7 @@ if uploaded_file_after is not None:
         st.write(f"***DNA Concentration is about {list_concentration[label_after]}***")
     except:
         st.write("There is problem with processing...\nplease upload another image!")
-
+st.markdown("""---""")
 st.title('Detection Result')
 if st.button('Analyze'):
     try:
