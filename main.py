@@ -250,7 +250,7 @@ if uploaded_file_before is not None:
     try:        
         cropped_before = Docrop(image_before)
         st.image([Image.fromarray(image_before_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_before[:, :, ::-1].copy())], 
-                caption=['Uploaded sample image','Target well'], use_column_width=True)
+                caption=['Uploaded sample image','Target well'], width=200)
         label_before = Dodetect(cropped_before)[0]
         st.write("")
         st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
@@ -265,7 +265,7 @@ if uploaded_file_after is not None:
     try:
         cropped_after = Docrop(image_after)
         st.image([Image.fromarray(image_after_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_after[:, :, ::-1].copy())], 
-                caption=['Uploaded sample image','Target well'], use_column_width=True)
+                caption=['Uploaded sample image','Target well'], width=200)
         label_after = Dodetect(cropped_after)[0]
         st.write(f"***DNA Concentration is about {list_concentration[label_after]}***")
     except:
@@ -282,3 +282,5 @@ if st.button('Analyze'):
             st.write("***This is SARS-CoV-2 negative sample***")
     except:
         st.header('Please re-upload images')
+else:
+    st.header('Please do analyze!')
