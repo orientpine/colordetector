@@ -1,8 +1,6 @@
 import streamlit as st
 st.set_option('deprecation.showfileUploaderEncoding', False) # deprecation 표시 안함 
-st.title("Concentration Detection using Machine Learning")
-st.markdown("""
-We can know concentration!""")
+st.title("SARS-CoV-2 Detection using Machine Learning")
 
 import numpy as np
 import cv2
@@ -244,38 +242,37 @@ def Dodetect(cropImg):
 
 uploaded_file_before = st.file_uploader("Please upload your sample image before guide RNA.", type=['jpeg', 'png', 'jpg', 'webp'])
 if uploaded_file_before is not None:
+    st.write("processing...")
+    try:
         image_before = Image.open(uploaded_file_before)
         image_before_drawed = Drawarea(image_before)
-        st.image(Image.fromarray(image_before_drawed[:, :, ::-1].copy()), caption='Uploaded sample image before guide RNA.', use_column_width=True)
         st.write("")
-        st.write("cropping...")
-        try:
-            cropped_before = Docrop(image_before_drawed)
-            st.image(Image.fromarray(cropped_before[:, :, ::-1].copy()), caption='Target well', use_column_width=True)
-            st.write("processing...")
-            label_before = Dodetect(cropped_before)
-            st.write(f"***DNA Concentration is about {label_before[1]}***")
-        except:
-            st.write("There is problem with cropping...\nplease upload another photo!")
+        cropped_before = Docrop(image_before_drawed)
+        st.image([Image.fromarray(image_before_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_before[:, :, ::-1].copy())], caption='Target well', use_column_width=True)
+        
+        label_before = Dodetect(cropped_before)
+        st.write(f"***DNA Concentration is about {label_before[1]}***")
+    except:
+        st.write("There is problem with cropping...\nplease upload another photo!")
 
 uploaded_file_after = st.file_uploader("Please upload your sample image after guide RNA.", type=['jpeg', 'png', 'jpg', 'webp'])
 if uploaded_file_after is not None:
+    st.write("processing...")
+    try:
         image_after = Image.open(uploaded_file_after)
         image_after_drawed = Drawarea(image_after)
-        st.image(Image.fromarray(image_after_drawed[:, :, ::-1].copy()), caption='Uploaded sample image after guide RNA.', use_column_width=True)
         st.write("")
-        st.write("cropping...")
-        try:
-            cropped_after = Docrop(image_after_drawed)
-            st.image(Image.fromarray(cropped_after[:, :, ::-1].copy()), caption='Target well', use_column_width=True)
-            st.write("processing...")
-            label_after = Dodetect(cropped_after)
-            st.write(f"***DNA Concentration is about {label_after[1]}***")
-        except:
-            st.write("There is problem with cropping...\nplease upload another photo!")
+        cropped_after = Docrop(image_after_drawed)
+        st.image([Image.fromarray(image_after_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_after[:, :, ::-1].copy())], caption='Target well', use_column_width=True)
+        
+        label_after = Dodetect(cropped_after)
+        st.write(f"***DNA Concentration is about {label_after[1]}***")
+    except:
+        st.write("There is problem with cropping...\nplease upload another photo!")
 
 st.title('Detection Result')
-if label_before[0] - label_after[0] >= 3:
-     st.write("***This is SARS-CoV-2 positive sample***")
-else:
-    st.write("***This is SARS-CoV-2 negative sample***")
+if label_before is not None and label_after is not None:
+    if label_before[0] - label_after[0] >= 3:
+        st.write("***This is SARS-CoV-2 positive sample***")
+    else:
+        st.write("***This is SARS-CoV-2 negative sample***")
