@@ -253,7 +253,7 @@ if uploaded_file_before is not None:
         label_before = Dodetect(cropped_before)
         st.write(f"***DNA Concentration is about {label_before[1]}***")
     except:
-        st.write("There is problem with cropping...\nplease upload another photo!")
+        st.write("There is problem with cropping...\nplease upload another image!")
 
 uploaded_file_after = st.file_uploader("Please upload your sample image after guide RNA.", type=['jpeg', 'png', 'jpg', 'webp'])
 if uploaded_file_after is not None:
@@ -268,11 +268,15 @@ if uploaded_file_after is not None:
         label_after = Dodetect(cropped_after)
         st.write(f"***DNA Concentration is about {label_after[1]}***")
     except:
-        st.write("There is problem with cropping...\nplease upload another photo!")
+        st.write("There is problem with cropping...\nplease upload another image!")
 
 st.title('Detection Result')
-if label_before is not None and label_after is not None:
-    if label_before[0] - label_after[0] >= 3:
-        st.write("***This is SARS-CoV-2 positive sample***")
-    else:
-        st.write("***This is SARS-CoV-2 negative sample***")
+if st.button('Analyze'):
+    try:
+        st.header('Detected!')
+        if label_before[0] - label_after[0] >= 3:
+            st.write("***This is SARS-CoV-2 positive sample***")
+        else:
+            st.write("***This is SARS-CoV-2 negative sample***")
+    except:
+        st.header('Please re-upload images')
