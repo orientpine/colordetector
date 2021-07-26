@@ -279,16 +279,17 @@ if uploaded_file_after is not None:
 
 st.markdown("""---""")
 st.title('Detection Result')
+st.write('Please do analyze!')
 if st.button('Analyze'):
     with st.spinner('Now processing.....'):
         try:
-            st.write('***Result:***')
+            st.markdwon('__Result:__')
             if label_before - label_after >= 3:
-                st.write("***This is SARS-CoV-2 positive sample***")
+                st.markdwon("This is SARS-CoV-2 __positive__ sample***")
             else:
-                st.write("***This is SARS-CoV-2 negative sample***")
+                st.markdwon("This is SARS-CoV-2 __negative__ sample***")
         except:
-            st.write('***Please re-upload images***')
+            st.markdwon('Please __re-upload__ images***')
     st.success('Done!')
 else:
-    st.write('***Please do analyze!***')
+    st.markdwon('__Result:__')
