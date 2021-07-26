@@ -283,13 +283,13 @@ st.write('Please do analyze!')
 if st.button('Analyze'):
     with st.spinner('Now processing.....'):
         try:
-            st.markdwon('__Result:__')
+            st.markdown('__Result:__')
             if label_before - label_after >= 3:
-                st.markdwon("This is SARS-CoV-2 __positive__ sample***")
+                st.markdown("This is SARS-CoV-2 __positive__ sample***")
             else:
-                st.markdwon("This is SARS-CoV-2 __negative__ sample***")
+                st.markdown("This is SARS-CoV-2 __negative__ sample***")
         except:
-            st.markdwon('Please __re-upload__ images***')
+            st.markdown('Please __re-upload__ images***')
     st.success('Done!')
 else:
-    st.markdwon('__Result:__')
+    st.markdown('__Result:__')
