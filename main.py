@@ -244,35 +244,39 @@ st.markdown("""---""")
 st.header('Before guide RNA')
 uploaded_file_before = st.file_uploader("Please upload your sample image before guide RNA.", type=['jpeg', 'png', 'jpg', 'webp'])
 if uploaded_file_before is not None:
-    st.write("processing...")
-    image_before = Image.open(uploaded_file_before)
-    image_before_drawed = Drawarea(image_before)
-    try:        
-        cropped_before = Docrop(image_before)
-    except:
-        st.write("There is problem with processing...\nplease upload another image!")
-    else:
-        st.image([Image.fromarray(image_before_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_before[:, :, ::-1].copy())], 
-                caption=['Uploaded sample image','Target well'], use_column_width ='auto')
-        label_before = Dodetect(cropped_before)[0]
-        st.write("")
-        st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
+    with st.spinner('Now processing.....'):
+        image_before = Image.open(uploaded_file_before)
+        image_before_drawed = Drawarea(image_before)
+        try:        
+            cropped_before = Docrop(image_before)
+        except:
+            st.write("There is problem with processing...\nplease upload another image!")
+        else:
+            st.image([Image.fromarray(image_before_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_before[:, :, ::-1].copy())], 
+                    caption=['Uploaded sample image','Target well'], use_column_width ='auto')
+            label_before = Dodetect(cropped_before)[0]
+            st.write("")
+            st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
+    st.success('Done!')
+
 st.markdown("""---""")
 st.header('After guide RNA')
 uploaded_file_after = st.file_uploader("Please upload your sample image after guide RNA.", type=['jpeg', 'png', 'jpg', 'webp'])
 if uploaded_file_after is not None:
-    st.write("processing...")
-    image_after = Image.open(uploaded_file_after)
-    image_after_drawed = Drawarea(image_after)
-    try:
-        cropped_after = Docrop(image_after)
-    except:
-        st.write("There is problem with processing...\nplease upload another image!")
-    else:
-        st.image([Image.fromarray(image_after_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_after[:, :, ::-1].copy())], 
-                caption=['Uploaded sample image','Target well'], use_column_width ='auto')
-        label_after = Dodetect(cropped_after)[0]
-        st.write(f"***DNA Concentration is about {list_concentration[label_after]}***")
+    with st.spinner('Now processing.....'):
+        image_after = Image.open(uploaded_file_after)
+        image_after_drawed = Drawarea(image_after)
+        try:
+            cropped_after = Docrop(image_after)
+        except:
+            st.write("There is problem with processing...\nplease upload another image!")
+        else:
+            st.image([Image.fromarray(image_after_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_after[:, :, ::-1].copy())], 
+                    caption=['Uploaded sample image','Target well'], use_column_width ='auto')
+            label_after = Dodetect(cropped_after)[0]
+            st.write(f"***DNA Concentration is about {list_concentration[label_after]}***")
+    st.success('Done!')
+
 st.markdown("""---""")
 st.title('Detection Result')
 if st.button('Analyze'):
