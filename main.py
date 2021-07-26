@@ -281,14 +281,13 @@ st.markdown("""---""")
 st.title('Detection Result')
 st.write('Please do analyze!')
 if st.button('Analyze'):
-    with st.spinner('Now processing.....'):
-        try:
-            st.markdown('__Result:__')
-            if label_before - label_after >= 3:
-                st.markdown("This is SARS-CoV-2 __positive__ sample")
-            else:
-                st.markdown("This is SARS-CoV-2 __negative__ sample")
-        except:
-            st.markdown('Please __re-upload__ images')
-    st.success('Done!')
+    try:
+        st.markdown('__Result:__')
+        if label_before - label_after >= 3:
+            st.markdown("This is SARS-CoV-2 __positive__ sample")
+        else:
+            st.markdown("This is SARS-CoV-2 __negative__ sample")
+    except:
+        st.markdown('Please __re-upload__ images')
+
 
