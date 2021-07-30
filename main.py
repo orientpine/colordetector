@@ -288,20 +288,22 @@ if st.button('Analyze'):
             st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25px;">Sample Type:</p>', unsafe_allow_html=True)
             if label_before - label_after >= 3:
                 if selected_option == 'SARS-CoV-2 variant':
-                    st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;">SARS-CoV-2 variant</p>', unsafe_allow_html=True)
+                    st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;"><strong>SARS-CoV-2 variant</strong></p>', unsafe_allow_html=True)
                 else:
-                    st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;">SARS-CoV-2</p>', unsafe_allow_html=True)
+                    st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;"><strong>SARS-CoV-2</strong></p>', unsafe_allow_html=True)
                 st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25x;">Result:</p>', unsafe_allow_html=True)
                 st.markdown('<p style="font-family:sans-serif; color:Red; font-size: 32px;"><strong>POSITIVE</strong></p>', unsafe_allow_html=True)
-                st.subheader(f"***DNA Concentration $$\approx$$ {list_concentration[label_before]}***")
+                st.markdown(f'<p style="font-family:sans-serif; color:Black;font-size: 18px;"><strong>DNA Concentration $\approx$ {list_concentration[label_before]}</strong></p>', unsafe_allow_html=True)
+
             else:
                 if selected_option == 'SARS-CoV-2 variant':
-                   st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;">SARS-CoV-2 variant</p>', unsafe_allow_html=True)
+                   st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;"><strong>SARS-CoV-2 variant</strong></p>', unsafe_allow_html=True)
                 else:
-                    st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;">SARS-CoV-2</p>', unsafe_allow_html=True)
+                    st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;"><strong>SARS-CoV-2</strong></p>', unsafe_allow_html=True)
                 st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25px;">Result:</p>', unsafe_allow_html=True)
                 st.markdown('<p style="font-family:sans-serif; color:Blue; font-size: 32px;"><strong>NEGATIVE</strong></p>', unsafe_allow_html=True)
-                st.subheader(f"***DNA Concentration $$\approx$$ {list_concentration[label_before]}***")
+                st.markdown(f'<p style="font-family:sans-serif; color:Black;font-size: 18px;"><strong>DNA Concentration $\approx$ {list_concentration[label_before]}</strong></p>', unsafe_allow_html=True)
+
         except:
             st.markdown('Please __re-upload__ images')
     st.success('Done!')
