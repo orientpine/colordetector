@@ -288,16 +288,16 @@ if st.button('Analyze'):
             st.markdown('__Result:__')
             if label_before - label_after >= 3:
                 if selected_option == 'SARS-CoV-2 variant':
-                    result_text = '<p style="font-family:sans-serif; color:Red; font-size: 42px;">***This is SARS-CoV-2 variant POSITIVE sample***</p>'
+                    result_text = '<p style="font-family:sans-serif; color:Red; font-size: 42px;">This is SARS-CoV-2 variant <strong>POSITIVE</strong> sample</p>'
                 else:
-                    result_text = '<p style="font-family:sans-serif; color:Red; font-size: 42px;">***This is SARS-CoV-2 POSITIVE sample***</p>'
+                    result_text = '<p style="font-family:sans-serif; color:Red; font-size: 42px;">This is SARS-CoV-2 <strong>POSITIVE</strong> sample</p>'
                 st.markdown(result_text, unsafe_allow_html=True)
                 st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
             else:
                 if selected_option == 'SARS-CoV-2 variant':
-                    result_text = '<p style="font-family:sans-serif; color:Black; font-size: 42px;">***This is SARS-CoV-2 variant NEGATIVE sample***</p>'
+                    result_text = '<p style="font-family:sans-serif; color:Black; font-size: 42px;">This is SARS-CoV-2 variant <strong>NEGATIVE</strong> sample</p>'
                 else:
-                    result_text = '<p style="font-family:sans-serif; color:Black; font-size: 42px;">***This is SARS-CoV-2 NEGATIVE sample***</p>' 
+                    result_text = '<p style="font-family:sans-serif; color:Black; font-size: 42px;">This is SARS-CoV-2 <strong>NEGATIVE</strong> sample</p>' 
                 st.markdown(result_text, unsafe_allow_html=True)
                 st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
         except:
