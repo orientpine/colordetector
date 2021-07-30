@@ -300,8 +300,8 @@ if st.button('Analyze'):
                 else:
                     st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;">SARS-CoV-2</p>', unsafe_allow_html=True)
                 st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25px;">Result:</p>', unsafe_allow_html=True)
-                st.markdown('<p style="font-family:sans-serif; color:Black; font-size: 32px;"><strong>NEGATIVE</strong></p>', unsafe_allow_html=True)
-                st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
+                st.markdown('<p style="font-family:sans-serif; color:Blue; font-size: 32px;"><strong>NEGATIVE</strong></p>', unsafe_allow_html=True)
+                st.write(f"***DNA Concentration ~= {list_concentration[label_before]}***")
         except:
             st.markdown('Please __re-upload__ images')
     st.success('Done!')
