@@ -240,6 +240,9 @@ def Dodetect(cropImg):
     # 결과 출력
     return predicted_result
 ## 사이트 설정
+options = ['SARS-CoV-2','SARS-CoV-2 variant']
+selected_option = st.select_slider("Choose a type", options=options)
+st.write("The selected type :mag: is",selected_option)
 st.markdown("""---""")
 st.header('Before guide RNA')
 uploaded_file_before = st.file_uploader("Please upload your sample image before guide RNA.", type=['jpeg', 'png', 'jpg', 'webp'])
@@ -256,7 +259,7 @@ if uploaded_file_before is not None:
                     caption=['Uploaded sample image','Target well'], use_column_width ='auto')
             label_before = Dodetect(cropped_before)[0]
             st.write("")
-            st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
+            
     st.success('Done!')
 
 st.markdown("""---""")
@@ -274,20 +277,38 @@ if uploaded_file_after is not None:
             st.image([Image.fromarray(image_after_drawed[:, :, ::-1].copy()),Image.fromarray(cropped_after[:, :, ::-1].copy())], 
                     caption=['Uploaded sample image','Target well'], use_column_width ='auto')
             label_after = Dodetect(cropped_after)[0]
-            st.write(f"***DNA Concentration is about {list_concentration[label_after]}***")
     st.success('Done!')
 
 st.markdown("""---""")
 st.title('Detection Result')
 st.write('Please do analyze!')
 if st.button('Analyze'):
-    try:
-        st.markdown('__Result:__')
-        if label_before - label_after >= 3:
-            st.markdown("This is SARS-CoV-2 __positive__ sample")
-        else:
-            st.markdown("This is SARS-CoV-2 __negative__ sample")
-    except:
-        st.markdown('Please __re-upload__ images')
-
+    with st.spinner('Now processing.....'):
+        try:
+            st.markdown('__Result:__')
+            if label_before - label_after >= 3:
+                if selected_option == 'SARS-CoV-2 variant':
+                    result_text = 'This is SARS-CoV-2 variant'
+                    result_text += '<p style="font-family:sans-serif; color:Green; font-size: 42px;">POSITIVE </p>'
+                    result_text += 'sample'
+                else:
+                    result_text = 'This is SARS-CoV-2 '
+                    result_text += '<p style="font-family:sans-serif; color:Green; font-size: 42px;">POSITIVE </p>'
+                    result_text += 'sample'
+                st.markdown(result_text, unsafe_allow_html=True)
+                st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
+            else:
+                if selected_option == 'SARS-CoV-2 variant':
+                    result_text = 'This is SARS-CoV-2 variant'
+                    result_text += '<p style="font-family:sans-serif; color:Red; font-size: 42px;">Negative </p>'
+                    result_text += 'sample'
+                else:
+                    result_text = 'This is SARS-CoV-2 '
+                    result_text += '<p style="font-family:sans-serif; color:Red; font-size: 42px;">POSITIVE </p>'
+                    result_text += 'sample'
+                st.markdown(result_text, unsafe_allow_html=True)
+                st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
+        except:
+            st.markdown('Please __re-upload__ images')
+    st.success('Done!')
 
