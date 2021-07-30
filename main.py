@@ -285,8 +285,8 @@ st.write('Please do analyze!')
 if st.button('Analyze'):
     with st.spinner('Now processing.....'):
         try:
-            st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25px;"><u>Sample Type</u></p>', unsafe_allow_html=True)
             if label_before - label_after >= 3:
+                st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25px;"><u>Sample Type</u></p>', unsafe_allow_html=True)
                 if selected_option == 'SARS-CoV-2 variant':
                     st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;"><strong>SARS-CoV-2 variant</strong></p>', unsafe_allow_html=True)
                 else:
@@ -296,6 +296,7 @@ if st.button('Analyze'):
                 st.markdown(f'<p style="font-family:sans-serif; color:Black;font-size: 18px;"><strong>DNA Concentration ≈ {list_concentration[label_before]}</strong></p>', unsafe_allow_html=True)
 
             else:
+                st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25px;"><u>Sample Type</u></p>', unsafe_allow_html=True)
                 if selected_option == 'SARS-CoV-2 variant':
                    st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;"><strong>SARS-CoV-2 variant</strong></p>', unsafe_allow_html=True)
                 else:
@@ -305,6 +306,6 @@ if st.button('Analyze'):
                 st.markdown(f'<p style="font-family:sans-serif; color:Black;font-size: 18px;"><strong>DNA Concentration ≈ {list_concentration[label_before]}</strong></p>', unsafe_allow_html=True)
 
         except:
-            st.markdown('Please __re-upload__ images')
+            st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25px;"><u>Please re-upload images</u></p>', unsafe_allow_html=True)
     st.success('Done!')
 
