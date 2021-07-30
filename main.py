@@ -288,24 +288,16 @@ if st.button('Analyze'):
             st.markdown('__Result:__')
             if label_before - label_after >= 3:
                 if selected_option == 'SARS-CoV-2 variant':
-                    result_text = 'This is SARS-CoV-2 variant'
-                    result_text += '<p style="font-family:sans-serif; color:Green; font-size: 42px;">POSITIVE </p>'
-                    result_text += 'sample'
+                    result_text = '<p style="font-family:sans-serif; color:Red; font-size: 42px;">***This is SARS-CoV-2 variant POSITIVE sample***</p>'
                 else:
-                    result_text = 'This is SARS-CoV-2 '
-                    result_text += '<p style="font-family:sans-serif; color:Green; font-size: 42px;">POSITIVE </p>'
-                    result_text += 'sample'
+                    result_text = '<p style="font-family:sans-serif; color:Red; font-size: 42px;">***This is SARS-CoV-2 POSITIVE sample***</p>'
                 st.markdown(result_text, unsafe_allow_html=True)
                 st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
             else:
                 if selected_option == 'SARS-CoV-2 variant':
-                    result_text = 'This is SARS-CoV-2 variant'
-                    result_text += '<p style="font-family:sans-serif; color:Red; font-size: 42px;">Negative </p>'
-                    result_text += 'sample'
+                    result_text = '<p style="font-family:sans-serif; color:Black; font-size: 42px;">***This is SARS-CoV-2 variant NEGATIVE sample***</p>'
                 else:
-                    result_text = 'This is SARS-CoV-2 '
-                    result_text += '<p style="font-family:sans-serif; color:Red; font-size: 42px;">POSITIVE </p>'
-                    result_text += 'sample'
+                    result_text = '<p style="font-family:sans-serif; color:Black; font-size: 42px;">***This is SARS-CoV-2 NEGATIVE sample***</p>' 
                 st.markdown(result_text, unsafe_allow_html=True)
                 st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
         except:
