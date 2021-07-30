@@ -285,19 +285,22 @@ st.write('Please do analyze!')
 if st.button('Analyze'):
     with st.spinner('Now processing.....'):
         try:
+            st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25px;">Sample Type:</p>', unsafe_allow_html=True)
             if label_before - label_after >= 3:
                 if selected_option == 'SARS-CoV-2 variant':
-                    result_text = '<p style="font-family:sans-serif; color:Red; font-size: 32px;">This is SARS-CoV-2 variant <strong>POSITIVE</strong> sample</p>'
+                    st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;">SARS-CoV-2 variant</p>', unsafe_allow_html=True)
                 else:
-                    result_text = '<p style="font-family:sans-serif; color:Red; font-size: 32px;">This is SARS-CoV-2 <strong>POSITIVE</strong> sample</p>'
-                st.markdown(result_text, unsafe_allow_html=True)
+                    st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;">SARS-CoV-2</p>', unsafe_allow_html=True)
+                st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25x;">Result:</p>', unsafe_allow_html=True)
+                st.markdown('<p style="font-family:sans-serif; color:Red; font-size: 32px;"><strong>POSITIVE</strong></p>', unsafe_allow_html=True)
                 st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
             else:
                 if selected_option == 'SARS-CoV-2 variant':
-                    result_text = '<p style="font-family:sans-serif; color:Black; font-size: 32px;">This is SARS-CoV-2 variant <strong>NEGATIVE</strong> sample</p>'
+                   st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;">SARS-CoV-2 variant</p>', unsafe_allow_html=True)
                 else:
-                    result_text = '<p style="font-family:sans-serif; color:Black; font-size: 32px;">This is SARS-CoV-2 <strong>NEGATIVE</strong> sample</p>' 
-                st.markdown(result_text, unsafe_allow_html=True)
+                    st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;">SARS-CoV-2</p>', unsafe_allow_html=True)
+                st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25px;">Result:</p>', unsafe_allow_html=True)
+                st.markdown('<p style="font-family:sans-serif; color:Black; font-size: 32px;"><strong>NEGATIVE</strong></p>', unsafe_allow_html=True)
                 st.write(f"***DNA Concentration is about {list_concentration[label_before]}***")
         except:
             st.markdown('Please __re-upload__ images')
