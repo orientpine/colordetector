@@ -241,7 +241,7 @@ def Dodetect(cropImg):
     return predicted_result
 ## 사이트 설정
 options = ['SARS-CoV-2','SARS-CoV-2 variant']
-selected_option = st.select_slider("Choose a type", options=options)
+selected_option = st.select_slider("Choose a type", options=options, default=0)
 st.write("The selected type :mag: is",selected_option)
 st.markdown("""---""")
 st.header('Before guide RNA')
