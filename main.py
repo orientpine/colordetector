@@ -287,7 +287,7 @@ if st.button('Analyze'):
         try:
             if label_before - label_after >= 3:
                 st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25px;"><u>Sample Type</u></p>', unsafe_allow_html=True)
-                if selected_option == options[int(selected_option)]:
+                if selected_option == 1:
                     st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;"><strong>SARS-CoV-2 variant</strong></p>', unsafe_allow_html=True)
                 else:
                     st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;"><strong>SARS-CoV-2</strong></p>', unsafe_allow_html=True)
@@ -297,7 +297,7 @@ if st.button('Analyze'):
 
             else:
                 st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25px;"><u>Sample Type</u></p>', unsafe_allow_html=True)
-                if selected_option == options[int(selected_option)]:
+                if selected_option == 1:
                    st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;"><strong>SARS-CoV-2 variant</strong></p>', unsafe_allow_html=True)
                 else:
                     st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;"><strong>SARS-CoV-2</strong></p>', unsafe_allow_html=True)
