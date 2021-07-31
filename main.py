@@ -241,8 +241,8 @@ def Dodetect(cropImg):
     return predicted_result
 ## 사이트 설정
 options = ['SARS-CoV-2','SARS-CoV-2 variant']
-selected_option = st.select_slider("Choose a type", options=options, default=0)
-st.write("The selected type :mag: is",selected_option)
+selected_option = st.select_slider("Choose a option", options=[0, 1])
+st.write("The selected option :mag: is",options[int(selected_option)])
 st.markdown("""---""")
 st.header('Before guide RNA')
 uploaded_file_before = st.file_uploader("Please upload your sample image before guide RNA.", type=['jpeg', 'png', 'jpg', 'webp'])
@@ -287,7 +287,7 @@ if st.button('Analyze'):
         try:
             if label_before - label_after >= 3:
                 st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25px;"><u>Sample Type</u></p>', unsafe_allow_html=True)
-                if selected_option == 'SARS-CoV-2 variant':
+                if selected_option == options[int(selected_option)]:
                     st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;"><strong>SARS-CoV-2 variant</strong></p>', unsafe_allow_html=True)
                 else:
                     st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;"><strong>SARS-CoV-2</strong></p>', unsafe_allow_html=True)
@@ -297,7 +297,7 @@ if st.button('Analyze'):
 
             else:
                 st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25px;"><u>Sample Type</u></p>', unsafe_allow_html=True)
-                if selected_option == 'SARS-CoV-2 variant':
+                if selected_option == options[int(selected_option)]:
                    st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;"><strong>SARS-CoV-2 variant</strong></p>', unsafe_allow_html=True)
                 else:
                     st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;"><strong>SARS-CoV-2</strong></p>', unsafe_allow_html=True)
