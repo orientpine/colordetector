@@ -233,7 +233,7 @@ def Dodetect(cropImg):
     Data_X = np.empty((0,9), dtype=np.uint8)
     Data_X = np.append(Data_X, [All_feature], axis=0)
     # 머신러닝 모델 불러오기
-    clf_from_joblib = joblib.load('trainedmodel_gbc.pkl') 
+    clf_from_joblib = joblib.load('trainedmodel_rf.pkl') 
     # 머신러닝 모델 적용
     predicted_result = clf_from_joblib.predict(Data_X)
 
