@@ -1,6 +1,7 @@
 import streamlit as st
 st.set_option('deprecation.showfileUploaderEncoding', False) # deprecation 표시 안함 
-st.title("SARS-CoV-2 Detection using Machine Learning")
+st.title("SARS-CoV-2 Detector")
+st.header("SARS-CoV-2 Detection using Machine Learning")
 import numpy as np
 import cv2
 import joblib
