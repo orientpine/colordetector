@@ -179,7 +179,7 @@ def Docrop(img):
     open_cv_image = np.array(img_pillow)
     img_raw = open_cv_image[:, :, ::-1].copy()  
     # 회전
-    load_img = imutils.rotate(img_raw, 0)
+    load_img = imutils.rotate(img_raw, -90)
     # 원본 이미지가 image shape : (3024, 4032, 3)
     image = imutils.resize(load_img, height=1400)
     oriImage = image.copy()
