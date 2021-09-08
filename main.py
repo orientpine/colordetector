@@ -128,7 +128,7 @@ def detectcircles(img):
     gray_blurred = cv2.GaussianBlur(gray, (3, 3),0)
 
     # Apply Hough transform on the blurred image. 
-    detected_circles = cv2.HoughCircles(gray, 
+    detected_circles = cv2.HoughCircles(gray_blurred, 
                     cv2.HOUGH_GRADIENT, 1.2, 20, param1 = 50, 
                 param2 = 30, minRadius = 50, maxRadius = 60) 
 
