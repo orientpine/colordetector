@@ -297,7 +297,7 @@ if st.button('Analyze'):
                     st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;"><strong>SARS-CoV-2</strong></p>', unsafe_allow_html=True)
                 
                 st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25px;"><u>Result</u></p>', unsafe_allow_html=True)
-                if selected_option == 1:
+                if selected_option == 0:
                     st.markdown('<p style="font-family:sans-serif; color:Red; font-size: 32px;"><strong>POSITIVE</strong></p>', unsafe_allow_html=True)
                 else:
                     st.markdown('<p style="font-family:sans-serif; color:Red; font-size: 32px;"><strong>POSITIVE</strong></p>', unsafe_allow_html=True)
@@ -314,7 +314,7 @@ if st.button('Analyze'):
                 if label_before == 0:
                     st.markdown('<p style="font-family:sans-serif; color:Blue; font-size: 32px;"><strong>NEGATIVE</strong></p>', unsafe_allow_html=True)
                 else:
-                    if selected_option == 1:
+                    if selected_option == 0:
                         st.markdown('<p style="font-family:sans-serif; color:Blue; font-size: 32px;"><strong>FALSE POSITIVE</strong></p>', unsafe_allow_html=True)
                         st.markdown('<p style="font-family:sans-serif; color:Blue; font-size: 32px;"><strong>(Try Again)</strong></p>', unsafe_allow_html=True)
                     else:
