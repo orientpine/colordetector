@@ -128,6 +128,8 @@ def detectcircles(img):
     gray_blurred = cv2.GaussianBlur(gray, (3, 3),0)
 
     # Apply Hough transform on the blurred image. 
+    # 흰색이 잘 디텍션이 안되서 minRadius = 50 -> 20으로 함
+    # 결과적으로는 20으로 바꾼게 잘되긴함!
     detected_circles = cv2.HoughCircles(gray, 
                     cv2.HOUGH_GRADIENT, 1.2, 20, param1 = 50, 
                 param2 = 30, minRadius = 20, maxRadius = 60) 
@@ -295,7 +297,10 @@ if st.button('Analyze'):
                     st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 32px;"><strong>SARS-CoV-2</strong></p>', unsafe_allow_html=True)
                 
                 st.markdown('<p style="font-family:sans-serif; color:Black;font-size: 25px;"><u>Result</u></p>', unsafe_allow_html=True)
-                st.markdown('<p style="font-family:sans-serif; color:Red; font-size: 32px;"><strong>POSITIVE</strong></p>', unsafe_allow_html=True)
+                if selected_option == 1:
+                    st.markdown('<p style="font-family:sans-serif; color:Red; font-size: 32px;"><strong>POSITIVE</strong></p>', unsafe_allow_html=True)
+                else:
+                    st.markdown('<p style="font-family:sans-serif; color:Red; font-size: 32px;"><strong>POSITIVE(Variants)</strong></p>', unsafe_allow_html=True)
                 st.markdown(f'<p style="font-family:sans-serif; color:Black;font-size: 18px;"><strong>DNA Concentration ≈ {list_concentration[label_before]}</strong></p>', unsafe_allow_html=True)
 
             else:
@@ -308,7 +313,10 @@ if st.button('Analyze'):
                 if label_before == 0:
                     st.markdown('<p style="font-family:sans-serif; color:Blue; font-size: 32px;"><strong>NEGATIVE</strong></p>', unsafe_allow_html=True)
                 else:
-                    st.markdown('<p style="font-family:sans-serif; color:Blue; font-size: 32px;"><strong>FALSE POSITIVE</strong></p>', unsafe_allow_html=True)
+                    if selected_option == 1:
+                        st.markdown('<p style="font-family:sans-serif; color:Blue; font-size: 32px;"><strong>FALSE POSITIVE(Try Again)</strong></p>', unsafe_allow_html=True)
+                    else:
+                        st.markdown('<p style="font-family:sans-serif; color:Blue; font-size: 32px;"><strong>POSITIVE(Not Variants)</strong></p>', unsafe_allow_html=True)
                 st.markdown(f'<p style="font-family:sans-serif; color:Black;font-size: 18px;"><strong>DNA Concentration ≈ {list_concentration[label_before]}</strong></p>', unsafe_allow_html=True)
 
         except:
